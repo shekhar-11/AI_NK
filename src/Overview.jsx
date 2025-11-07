@@ -2,13 +2,20 @@ import React, { useState } from "react";
 
 const Overview = () => {
   const fieldQuestions = [
-    "Did you face any problems or bugs while using the product? If yes, please describe them.",
-    "Was there any feature that didn’t work as you expected?",
-    "Did you notice any performance issues (like lag, crashes, or slow response)?",
-    "Was there anything confusing or difficult to understand during setup or use?",
-    "Did the product meet the description or promises made before purchase?",
-    "Have you experienced any compatibility or integration issues (e.g., with your device or other software)?",
-    "What was the most frustrating or time-consuming part of your experience with the product?",
+    "ID",
+    "Bugs",
+
+"Functionality",
+
+"Performance",
+
+"Usability",
+
+"Expectations",
+
+"Compatibility",
+
+   
   ];
 
   const [descriptions, setDescriptions] = useState(
@@ -22,50 +29,44 @@ const Overview = () => {
     setDescriptions((prev) => ({ ...prev, [q]: value }));
   };
 
-  const handleVote = (approverIndex, value) => {
+  const checkDescriptionsFilled = () => {
+    for (let q of fieldQuestions) {
+      if (!descriptions[q] || descriptions[q].trim() === "") {
+        return false;
+      }
+    }}
+
+ const handleVote = (approverIndex, value) => {
+  if (checkDescriptionsFilled) {
     setVotes((prev) => {
       const newVotes = [...prev];
       newVotes[approverIndex] = value;
       return newVotes;
     });
-  };
+  } else {
+    alert("Please fill all descriptions before voting.");
+  }
+};
 
   const checkApproval = () => {
     const approvedBy = votes.filter((v) => v === 1).length;
 
-    if (approvedBy >= 3) {
+    if (approvedBy == 5) {
       setApproved(true);
       saveToFile();
     } else {
-      alert("Not enough approvals yet. Minimum 3 out of 5 approvers must approve.");
+      alert("Not enough approvals yet");
     }
   };
 
   const saveToFile = () => {
-    const data = {
-      status: "approved",
-      approved_on: new Date().toISOString(),
-      total_approvers: 5,
-      approved_by: votes.filter((v) => v === 1).length,
-      fields: descriptions,
-    };
-
-    const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: "application/json",
-    });
-
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `approved_review_${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+   console.log("Approved Descriptions:", descriptions);
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-6">
-      <h1 className="text-2xl font-bold mb-8 text-center">
-        🧾 Product Review Approval System
+      <h1 className="text-2xl font-bold mb-8 text-center text-red-600">
+        🧾  Review Approval
       </h1>
 
       {/* Two-column layout: Descriptions (left) and Approvers (right) */}
@@ -91,7 +92,7 @@ const Overview = () => {
           ))}
         </div>
 
-        {/* Right: Approvers Section */}
+       
         <div className="bg-white shadow-md rounded-xl p-5 border h-fit md:sticky md:top-10 flex flex-col">
           <h2 className="text-lg font-semibold mb-4">
             Approver Votes
@@ -103,21 +104,19 @@ const Overview = () => {
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleVote(approverIndex, 1)}
-                    className={`px-2 py-1 text-sm rounded ${
-                      v === 1
-                        ? "bg-green-500 text-white"
-                        : "bg-gray-200 text-gray-800"
-                    }`}
+                    className={`px-2 py-1 text-sm rounded ${v === 1
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-200 text-gray-800"
+                      }`}
                   >
                     +1
                   </button>
                   <button
                     onClick={() => handleVote(approverIndex, -1)}
-                    className={`px-2 py-1 text-sm rounded ${
-                      v === -1
-                        ? "bg-red-500 text-white"
-                        : "bg-gray-200 text-gray-800"
-                    }`}
+                    className={`px-2 py-1 text-sm rounded ${v === -1
+                      ? "bg-red-500 text-white"
+                      : "bg-gray-200 text-gray-800"
+                      }`}
                   >
                     -1
                   </button>
@@ -125,9 +124,7 @@ const Overview = () => {
               </div>
             ))}
           </div>
-          <p className="mt-4 text-sm text-gray-600">
-            Current approvals: {votes.filter((v) => v === 1).length}/5
-          </p>
+          
 
           <button
             onClick={checkApproval}
