@@ -4,15 +4,15 @@ import { transferData } from "./transfer";
 const Overview = () => {
   const fieldQuestions = [
     "ID",
-    "Expectations",
+    "Note to Reviewers",
 
-    "Functionality",
-    "Compatibility",
+    "Root Cause Analysis",
+    "Testing Done",
 
-    "Usability",
+    "Impacted Hardware",
 "Performance",
 
-"Bugs"
+"Additional Comments",
 
 
 
@@ -94,12 +94,12 @@ const saveToFile = async () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-6">
       <h1 className="text-2xl font-bold mb-8 text-center text-red-600">
-        🧾  Review Approval
+         Review Approval
       </h1>
 
-      {/* Two-column layout: Descriptions (left) and Approvers (right) */}
+    
       <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left: Questions Section */}
+
         <div className="space-y-5">
           {fieldQuestions.map((q, idx) => (
             <div

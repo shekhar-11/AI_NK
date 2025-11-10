@@ -12,13 +12,13 @@ export const transferData = async (data)=>{
             else
             {
                  const formattedData = {
-                id: data["ID"],
-                expectations: data["Expectations"],
-                functionality: data["Functionality"],
-                compatibility: data["Compatibility"],
-                usability: data["Usability"],
+                bug_id: data["ID"],
+                note_to_reviewers: data["Note to Reviewers"],
+                root_cause_analysis: data["Root Cause Analysis"],
+                testing: data["Testing Done"],
+                impacted_hw: data["Impacted Hardware"],
                 performance: data["Performance"],
-                bugs: data["Bugs"],
+                comments: data["Additional Comments"],
     };
                 await axios.post("api/addData", formattedData)
                 .then((response)=>{

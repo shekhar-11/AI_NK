@@ -2,25 +2,25 @@ import mongoose from "mongoose";
 
 
 const Otschema = new mongoose.Schema({
-    id:
+    bug_id:
     {
         type:String,
         unique:true,
         required:true
     },
-    expectations:{
+    note_to_reviewers:{
         type:String,
         required:true
     },
-    functionality:{
+    root_cause_analysis:{
         type:String,
         required:true
     },
-    compatibility:{
+    testing:{
         type:String,
         required:true
     },
-    usability:{
+    impacted_hw:{
         type:String,
         required:true
     },
@@ -28,7 +28,7 @@ const Otschema = new mongoose.Schema({
         type:String,
         required:true
     },
-    bugs:{
+    comments:{
         type:String,
         required:true
     }
